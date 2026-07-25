@@ -1,13 +1,14 @@
+require("dotenv").config();
+
 const {
     Client,
     GatewayIntentBits,
     SlashCommandBuilder,
     REST,
     Routes
-} = require('discord.js');
+} = require("discord.js");
 
-// UDFYLD DISSE
-const TOKEN = "MTUzMDQwNjQ0NzU3NjM4MzcxNg.GNjBcW.4gqVRbwtGTpFvmTYhiIpapPZ2mwwHOoN0i9VrA";
+const TOKEN = process.env.TOKEN;
 const CLIENT_ID = "1530406447576383716";
 const GUILD_ID = "1530290276483072040";
 
@@ -15,14 +16,12 @@ const client = new Client({
     intents: [GatewayIntentBits.Guilds]
 });
 
-// Opret /radio kommandoen
 const commands = [
     new SlashCommandBuilder()
         .setName("radio")
         .setDescription("Få en tilfældig radiofrekvens")
 ].map(command => command.toJSON());
 
-// Registrer slash-kommandoen
 const rest = new REST({ version: "10" }).setToken(TOKEN);
 
 (async () => {
@@ -44,9 +43,7 @@ client.once("ready", () => {
     console.log(`${client.user.tag} er online!`);
 });
 
-// /radio
 client.on("interactionCreate", async interaction => {
-
     if (!interaction.isChatInputCommand()) return;
 
     if (interaction.commandName === "radio") {
@@ -68,9 +65,7 @@ client.on("interactionCreate", async interaction => {
                 }
             ]
         });
-
     }
-
 });
 
 client.login(TOKEN);
